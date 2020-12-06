@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server --open --port=3000",
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
@@ -50,8 +50,8 @@
     "ts-jest": "^25.5.0",
     "ts-loader": "^8.0.11",
     "typescript": "^3.8.3",
-    "webpack": "^5.10.0",
-    "webpack-cli": "^4.2.0",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
