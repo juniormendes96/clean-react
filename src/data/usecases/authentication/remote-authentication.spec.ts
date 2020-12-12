@@ -1,4 +1,4 @@
-import { AuthenticationParams } from '@/domain/usecases/authentication'
+import { AuthenticationParams } from '@/domain/usecases'
 import { mockAccountModel, mockAuthentication } from '@/domain/test'
 import { HttpPostClientSpy } from '@/data/test'
 import { RemoteAuthentication } from './remote-authentication'
