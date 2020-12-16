@@ -35,7 +35,7 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
   }, [state.name, state.email, state.password, state.passwordConfirmation])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    if (state.isLoading) {
+    if (state.isLoading || state.nameError || state.emailError || state.passwordError || state.passwordConfirmationError) {
       return
     }
 
