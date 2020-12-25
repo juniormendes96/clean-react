@@ -5,14 +5,15 @@ import { Router } from 'react-router-dom'
 
 import { ApiContext } from '@/presentation/contexts'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
-import { Helper, ValidationStub, AddAccountSpy } from '@/presentation/test'
+import { Helper, ValidationStub } from '@/presentation/test'
 import { EmailInUseError } from '@/domain/errors'
+import { AddAccount } from '@/domain/usecases'
+import { AddAccountSpy } from '@/domain/test'
 import SignUp from './signup'
-import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
   addAccountSpy: AddAccountSpy
-  setCurrentAccountMock: (account: AccountModel) => void
+  setCurrentAccountMock: (account: AddAccount.Model) => void
 }
 
 type SutParams = {
