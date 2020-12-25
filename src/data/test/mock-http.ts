@@ -4,11 +4,12 @@ import faker from 'faker'
 
 export const mockPostRequest = (): HttpPostParams => ({
   url: faker.internet.url(),
-  body: faker.random.objectElement
+  body: faker.random.objectElement()
 })
 
 export const mockGetRequest = (): HttpGetParams => ({
-  url: faker.internet.url()
+  url: faker.internet.url(),
+  headers: faker.random.objectElement()
 })
 
 export class HttpPostClientSpy<R> implements HttpPostClient<R> {
