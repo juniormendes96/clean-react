@@ -1,6 +1,7 @@
 import faker from 'faker'
 import * as Http from '../support/login-mocks'
-import * as FormHelper from '../support/form-helper'
+import * as FormHelper from '../support/form-helpers'
+import * as Helper from '../support/helpers'
 
 const populateFields = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email())
@@ -57,7 +58,7 @@ describe('Login', () => {
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5)).type('{enter}')
 
     FormHelper.testMainError('Credenciais inválidas')
-    FormHelper.testUrl('/login')
+    Helper.testUrl('/login')
   })
 
   it('Should present UnexpectedError on default error cases', () => {
@@ -65,17 +66,8 @@ describe('Login', () => {
 
     simulateValidSubmit()
 
-    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente  em breve.')
-    FormHelper.testUrl('/login')
-  })
-
-  it('Should present UnexpectedError if invalid data returns', () => {
-    Http.mockInvalidData()
-
-    simulateValidSubmit()
-
-    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente  em breve.')
-    FormHelper.testUrl('/login')
+    FormHelper.testMainError('Algo de errado aconteceu. Tente novamente em breve.')
+    Helper.testUrl('/login')
   })
 
   it('Should save account if valid credentials are provided', () => {
@@ -86,7 +78,7 @@ describe('Login', () => {
     cy.getByTestId('main-error').should('not.exist')
     cy.getByTestId('spinner').should('not.exist')
 
-    FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('account')
+    Helper.testUrl('/')
+    Helper.testLocalStorageItem('account')
   })
 })

@@ -1,5 +1,3 @@
-const baseUrl: string = Cypress.config().baseUrl
-
 export const testInputStatus = (field: string, error?: string): void => {
   cy.getByTestId(`${field}-wrap`).should('have.attr', 'data-status', error ? 'invalid' : 'valid')
 
@@ -11,12 +9,4 @@ export const testInputStatus = (field: string, error?: string): void => {
 export const testMainError = (error: string): void => {
   cy.getByTestId('spinner').should('not.exist')
   cy.getByTestId('main-error').should('contain.text', error)
-}
-
-export const testUrl = (path: string): void => {
-  cy.url().should('eq', `${baseUrl}${path}`)
-}
-
-export const testLocalStorageItem = (key: string): void => {
-  cy.window().then(window => assert.isOk(window.localStorage.getItem(key)))
 }
