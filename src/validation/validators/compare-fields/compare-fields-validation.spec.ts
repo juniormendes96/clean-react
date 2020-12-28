@@ -6,8 +6,8 @@ const makeSut = (field: string, fieldToCompare: string): CompareFieldsValidation
 
 describe('CompareFieldsValidation', () => {
   test('Should return error if comparation is invalid', () => {
-    const field = faker.random.word()
-    const fieldToCompare = faker.random.word()
+    const field = 'any_field'
+    const fieldToCompare = 'other_field'
     const sut = makeSut(field, fieldToCompare)
     const error = sut.validate({
       [field]: 'any_value',
@@ -17,8 +17,8 @@ describe('CompareFieldsValidation', () => {
   })
 
   test('Should return falsy if comparation is valid', () => {
-    const field = faker.random.word()
-    const fieldToCompare = faker.random.word()
+    const field = 'any_field'
+    const fieldToCompare = 'other_field'
     const value = faker.random.word()
     const sut = makeSut(field, fieldToCompare)
     const error = sut.validate({
