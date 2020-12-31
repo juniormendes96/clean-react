@@ -1,16 +1,25 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 
 import { SurveyResult } from '@/presentation/pages'
 import { ApiContext } from '@/presentation/contexts'
-import { mockAccountModel } from '@/domain/test'
+import { LoadSurveyResultSpy, mockAccountModel } from '@/domain/test'
 
-const makeSut = (): void => {
+type SutTypes = {
+  loadSurveyResultSpy: LoadSurveyResultSpy
+}
+
+const makeSut = (): SutTypes => {
+  const loadSurveyResultSpy = new LoadSurveyResultSpy()
   render(
     <ApiContext.Provider value={{ setCurrentAccount: jest.fn(), getCurrentAccount: () => mockAccountModel() }}>
-      <SurveyResult/>
+      <SurveyResult loadSurveyResult={loadSurveyResultSpy}/>
     </ApiContext.Provider>
   )
+
+  return {
+    loadSurveyResultSpy
+  }
 }
 
 describe('SurveyResult Component', () => {
@@ -21,5 +30,15 @@ describe('SurveyResult Component', () => {
     expect(surveyResult.childElementCount).toBe(0)
     expect(screen.queryByTestId('error')).not.toBeInTheDocument()
     expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+
+    await waitFor(() => surveyResult)
+  })
+
+  test('Should call LoadSurveyResult', async () => {
+    const { loadSurveyResultSpy } = makeSut()
+
+    await waitFor(() => screen.getByTestId('survey-result'))
+
+    expect(loadSurveyResultSpy.callsCount).toBe(1)
   })
 })
