@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import FlipMove from 'react-flip-move'
 
 import Styles from './survey-result-styles.scss'
@@ -12,6 +13,7 @@ type Props = {
 
 const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
   const handleError = useErrorHandler((error: Error) => setState(old => ({ ...old, surveyResult: null, error: error.message })))
+  const { goBack } = useHistory()
   const [state, setState] = useState({
     isLoading: false,
     error: '',
@@ -45,7 +47,7 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
                 <span data-testid="percent" className={Styles.percent}>{answer.percent}%</span>
               </li>)}
           </FlipMove>
-          <button>Voltar</button>
+          <button data-testid="back-button" onClick={goBack}>Voltar</button>
         </>
         }
         {state.isLoading && <Loading />}
