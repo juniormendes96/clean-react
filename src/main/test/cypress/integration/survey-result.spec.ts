@@ -1,7 +1,7 @@
 import * as Http from '../utils/http-mocks'
 import * as Helper from '../utils/helpers'
 
-const path = /surveys/
+const path = /\/api\/surveys/
 const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
 const mockAccessDeniedError = (): void => Http.mockForbiddenError(path, 'GET')
 const mockSuccess = (): void => Http.mockOk(path, 'GET', 'survey-result')
@@ -14,25 +14,22 @@ describe('SurveyResult', () => {
   })
 
   it('Should present error on UnexpectedError', () => {
-    cy.visit('/surveys/any_id')
-
     mockUnexpectedError()
+    cy.visit('/surveys/any_id')
 
     cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
   })
 
   it('Should logout on AccessDeniedError', () => {
-    cy.visit('/surveys/any_id')
-
     mockAccessDeniedError()
+    cy.visit('/surveys/any_id')
 
     Helper.testUrl('/login')
   })
 
   it('Should present survey result', () => {
-    cy.visit('/surveys/any_id')
-
     mockSuccess()
+    cy.visit('/surveys/any_id')
 
     cy.getByTestId('question').should('have.text', 'Question')
 
@@ -51,5 +48,15 @@ describe('SurveyResult', () => {
       assert.equal(li.find('[data-testid="percent"]').text(), '30%')
       assert.notExists(li.find('[data-testid="image"]'))
     })
+  })
+
+  it('Should go to SurveyList on back button click', () => {
+    mockSuccess()
+    cy.visit('')
+    cy.visit('/surveys/any_id')
+
+    cy.getByTestId('back-button').click()
+
+    Helper.testUrl('/')
   })
 })
