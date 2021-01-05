@@ -4,7 +4,7 @@ import { SurveyResult } from '@/presentation/pages'
 import { makeRemoteLoadSurveyResult, makeRemoteSaveSurveyResult } from '@/main/factories/usecases'
 
 export const makeSurveyResult: React.FC = () => {
-  const { id } = useParams<any>()
+  const { id } = useParams<{ id: string }>()
 
   return (
     <SurveyResult
